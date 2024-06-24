@@ -16,8 +16,10 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 import java.lang.*;
-public class MainController implements Initializable{
+public class MainController{
 
+    @FXML
+    private TextField VType;
     @FXML
     private TextField TXID;
 
@@ -32,9 +34,6 @@ public class MainController implements Initializable{
 
     @FXML
     private TextField TXSTOCK;
-
-    @FXML
-    private TextField Vtype;
 
     @FXML
     private TextField newValue;
@@ -70,11 +69,12 @@ public class MainController implements Initializable{
     @FXML
     private TableColumn<Books, String> COLAUTHUR;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    ObservableList<Books> bookList = FXCollections.observableArrayList();
+
+
+    public void initialize() {
         // Optional initialization code can go here.
         showBooks();
-        System.out.println("function tried");
     }
 
     private Connection getConnection(){
@@ -107,6 +107,7 @@ public class MainController implements Initializable{
             book.addBook(book);
             showAlert(AlertType.INFORMATION, "Success!", "Book added successfully.");
 
+
             // Clear input fields
             TXID.clear();
             TXTITLE.clear();
@@ -116,6 +117,8 @@ public class MainController implements Initializable{
         } catch (NumberFormatException e) {
             showAlert(AlertType.ERROR, "Form Error!", "Please enter valid numbers for pages and stock.");
         }
+        bookList.clear();
+        initialize();
     }
 @FXML
     private void deleteBookById() {
@@ -141,6 +144,8 @@ public class MainController implements Initializable{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        bookList.clear();
+   initialize();
     }
 
     @FXML
@@ -148,7 +153,7 @@ public class MainController implements Initializable{
         int bookId = Integer.parseInt(TXID.getText()); // Assuming PBID is a TextField for entering the book ID
 
         // Assuming updateType and newValue are predefined
-        String updateType = Vtype.getText();
+        String updateType = VType.getText();
         String NValue = newValue.getText(); // Replace newValue with the actual new value
 
         String updateSQL = "";
@@ -202,11 +207,13 @@ public class MainController implements Initializable{
             System.out.println("Invalid format for quantity: " + NValue);
             e.printStackTrace();
         }
+        bookList.clear();
+        initialize();
     }
 
 
     public ObservableList<Books> getBooksList(){
-         ObservableList<Books> bookList = FXCollections.observableArrayList();
+
          Connection conn = getConnection();
          String query = "SELECT id, title, numberOfPages, quantitiesInStock, author FROM books";
          Statement st;
