@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="789.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.frontPageController">
+   <children>
+      <Button layoutX="187.0" layoutY="124.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="471.0" text="UPDATE BOOK DATABASE" onAction="#switchToUpdateBookDatabase">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="179.0" layoutY="303.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="479.0" text="APPROVE TRANSACTION" onAction="#switchToApproveTransaction">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Text layoutX="97.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME " textAlignment="CENTER" wrappingWidth="617.3367614746094">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

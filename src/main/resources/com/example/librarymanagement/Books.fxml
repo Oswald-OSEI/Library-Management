@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.MainController">
+    <children>
+        <SplitPane dividerPositions="0.31307692307692303" layoutX="10.0" layoutY="8.0" prefHeight="582.0" prefWidth="781.0">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="581.0" prefWidth="155.0">
+                    <children>
+                        <VBox layoutX="8.0" layoutY="14.0" prefHeight="202.0" prefWidth="226.0">
+                            <children>
+                                <TextField fx:id="TXTITLE" layoutX="13.0" layoutY="12.0" prefHeight="22.0" prefWidth="210.0" promptText="TITLE">
+                                    <VBox.margin>
+                                        <Insets bottom="6.0" left="3.0" right="3.0" top="3.0" />
+                                    </VBox.margin>
+                                </TextField>
+                                <TextField fx:id="TXPAGES" layoutX="10.0" layoutY="41.0" prefHeight="22.0" prefWidth="210.0" promptText="NUMBER OF PAGES">
+                                    <VBox.margin>
+                                        <Insets bottom="6.0" left="3.0" right="3.0" top="3.0" />
+                                    </VBox.margin>
+                                </TextField>
+                                <TextField fx:id="TXAUTHUR" layoutX="10.0" layoutY="67.0" prefHeight="22.0" prefWidth="210.0" promptText="AUTHOR">
+                                    <VBox.margin>
+                                        <Insets bottom="6.0" left="3.0" right="3.0" top="3.0" />
+                                    </VBox.margin>
+                                </TextField>
+                                <TextField fx:id="TXSTOCK" layoutX="10.0" layoutY="92.0" prefHeight="22.0" prefWidth="210.0" promptText="QUANTITIES IN STOCK">
+                                    <VBox.margin>
+                                        <Insets bottom="6.0" left="3.0" right="3.0" top="3.0" />
+                                    </VBox.margin>
+                                </TextField>
+                                <Button fx:id="BTADD" mnemonicParsing="false" onAction="#addBook" prefHeight="24.0" prefWidth="218.0" text="ADD BOOK" textFill="#151515" />
+                            </children>
+                        </VBox>
+                        <HBox layoutX="11.0" layoutY="319.0" prefHeight="49.0" prefWidth="220.0" />
+                        <VBox layoutY="192.0" prefHeight="378.0" prefWidth="242.0">
+                            <children>
+                                <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="386.0" prefWidth="242.0">
+                                    <items>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="241.0">
+                                            <children>
+                                                <Button fx:id="EditButton" layoutX="6.0" layoutY="148.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="222.0" text="Edit Book Details">
+                                                    <padding>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </padding>
+                                                </Button>
+                                                <TextField fx:id="TXID" layoutX="15.0" layoutY="14.0" prefHeight="22.0" prefWidth="210.0" promptText="BOOK ID" />
+                                                <TextField fx:id="VType" layoutX="12.0" layoutY="60.0" prefHeight="26.0" prefWidth="210.0" promptText="Value type eg. title, author, etc" />
+                                                <TextField fx:id="newValue" layoutX="12.0" layoutY="107.0" prefHeight="26.0" prefWidth="210.0" promptText="new value" />
+                                            </children>
+                                        </AnchorPane>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="156.0" prefWidth="241.0">
+                                            <children>
+                                                <Button fx:id="Deletebutton" layoutX="7.0" layoutY="103.0" mnemonicParsing="false" onAction="#deleteBookById" prefHeight="26.0" prefWidth="226.0" text="Delete Book" />
+                                                <TextField fx:id="TXID1" layoutX="15.0" layoutY="14.0" prefHeight="22.0" prefWidth="210.0" promptText="BOOK ID" />
+                                            </children>
+                                        </AnchorPane>
+                                    </items>
+                                </SplitPane>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="581.0" prefWidth="552.0">
+                    <children>
+                        <TableView fx:id="TABLE" layoutX="1.0" layoutY="30.0" prefHeight="542.0" prefWidth="534.0">
+                            <columns>
+                                <TableColumn fx:id="COLID" prefWidth="29.60003662109375" text="ID" />
+                                <TableColumn fx:id="COLTITLE" prefWidth="251.199951171875" text="TITLE" />
+                                <TableColumn fx:id="COLPAGES" prefWidth="45.60003662109375" text="PAGES" />
+                                <TableColumn fx:id="COLSTOCK" prefWidth="45.60003662109375" text="STOCK" />
+                                <TableColumn fx:id="COLAUTHUR" prefWidth="155.199951171875" text="AUTHOR" />
+                            </columns>
+                        </TableView>
+                        <Text layoutX="178.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LIBRARY BOOKS " textAlignment="CENTER" wrappingWidth="150.13671875">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</AnchorPane>
