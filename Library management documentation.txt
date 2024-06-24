@@ -1,0 +1,72 @@
+Library Management System Documentation
+Overview
+The Library Management System is a JavaFX-based application designed to manage a library's operations, including book borrowing, returning, and inventory management. The system also handles user authentication for librarians and patrons.
+
+Key Features
+User Authentication: Secure login for both patrons and librarians.
+Book Management: Add, update, and delete books from the library inventory.
+Transaction Management: Borrow and return books, track transaction history.
+Patron Management: Register new patrons, update patron information.
+Librarian Management: Manage librarian accounts and permissions.
+Reporting: Generate reports on borrowed books, available stock, and transaction history.
+Technologies Used
+Java: Core language for application logic.
+JavaFX: Framework for building the user interface.
+MySQL: Relational database for storing library data.
+JDBC: Java Database Connectivity for database interactions.
+Database Schema
+
+Tables
+
+Patrons
+patron_id: INT, Primary Key
+name: VARCHAR(255)
+email: VARCHAR(255)
+tel_number: VARCHAR(20)
+password: VARCHAR(255)
+
+Books 
+book_id: INT, Primary Key
+title: VARCHAR(255)
+author: VARCHAR(255)
+quantitiesInStock: INT
+available: BOOLEAN
+numberOfPages: INT
+
+Transactions 
+transaction_id: INT, Primary Key
+book_id: INT, Foreign Key
+patron_id: INT, Foreign Key
+approved_by: INT, Foreign Key (Librarian)
+received_by: INT, Foreign Key (Librarian)
+date_borrowed: TIMESTAMP
+date_returned: TIMESTAMP, Nullable
+isReturned: BOOLEAN
+
+Librarians 
+librarian_id: INT, Primary Key
+name: VARCHAR(255)
+email: VARCHAR(255)
+tel_number: VARCHAR(20)
+password: VARCHAR(255)
+
+Key Functionalities
+1. User Authentication
+Login: Validate user credentials against the database using the login function
+Registration: Add new patrons to the system using the addPatron function
+2. Book Management
+Add Book: Insert new book records into the Books table using the addBook function
+Update Book: Modify book details such as title, author, and stock using the updateBookById function
+Delete Book: Remove book records from the database using the deleteBookById function
+3. Transaction Management
+Borrow Book: Create a new transaction record, update book availability using approveBorrowing fucntion
+Return Book: Update transaction record with return date, mark book as available using the approveReturn function
+View Transactions: List all transactions for a specific patron using the getPatron function.
+4. Patron Management
+Add Patron: Register new patrons using the addPatron function
+Update Patron: Modify patron details.
+Delete Patron: Remove patron records from the database.
+5. Librarian Management
+Add Librarian: Register new librarians.
+Update Librarian: Modify librarian details.
+Delete Librarian: Remove librarian records from the database.
