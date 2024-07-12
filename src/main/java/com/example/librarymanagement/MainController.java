@@ -3,6 +3,7 @@ package com.example.librarymanagement;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+<<<<<<< HEAD
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+=======
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+>>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -17,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+<<<<<<< HEAD
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,6 +35,13 @@ public class MainController{
     private Stage stage;
     private Scene scene;
     private Parent root;
+=======
+import java.net.URL;
+import java.sql.*;
+import java.util.ResourceBundle;
+import java.lang.*;
+public class MainController{
+>>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
 
     @FXML
     private TextField VType;
@@ -100,6 +113,7 @@ public class MainController{
     }
 
     @FXML
+<<<<<<< HEAD
     void backtoFrontPage(ActionEvent event) throws IOException {
         this.root = (Parent) FXMLLoader.load((URL) Objects.requireNonNull(this.getClass().getResource("front page.fxml")));
         this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -109,6 +123,8 @@ public class MainController{
     }
 
     @FXML
+=======
+>>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
     private void addBook() {
         String title = TXTITLE.getText();
         String pagesText = TXPAGES.getText();

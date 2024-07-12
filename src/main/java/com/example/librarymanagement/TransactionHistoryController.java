@@ -15,10 +15,17 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+<<<<<<< HEAD
 import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
+=======
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+>>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
 import java.sql.*;
 import java.lang.*;
 import java.util.Objects;
@@ -27,7 +34,10 @@ public class TransactionHistoryController {
     private Stage stage;
     private Scene scene;
     private Parent root;
+<<<<<<< HEAD
     ObservableList<Transaction> transactions = FXCollections.observableArrayList();
+=======
+>>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
 
     @FXML
     public void switchToApproval(ActionEvent event) throws IOException {
@@ -94,6 +104,7 @@ public class TransactionHistoryController {
     }
     Connection conn = getConnection();
 
+<<<<<<< HEAD
     @FXML
     void backtoFrontPage(ActionEvent event) throws IOException {
         this.root = (Parent)FXMLLoader.load((URL)Objects.requireNonNull(this.getClass().getResource("front page.fxml")));
@@ -103,6 +114,8 @@ public class TransactionHistoryController {
         this.stage.show();
     }
 
+=======
+>>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
     //function to add a patron
     @FXML
     private void addPatron() {
@@ -165,6 +178,7 @@ public class TransactionHistoryController {
                             try (PreparedStatement pS = conn.prepareStatement(query1)){
                                 pS.setInt(1, patron.getPersonId());
                                 try(ResultSet rs = pS.executeQuery()){
+<<<<<<< HEAD
                                 while (rs.next()){
                                     Books book = this.getBookById(rs.getInt("book_id"));
                                     String book_title = book.getTitle();
@@ -179,6 +193,25 @@ public class TransactionHistoryController {
                                     transactions.add(transaction);
                                 }
 
+=======
+                                    ObservableList<Transaction> transactions = FXCollections.observableArrayList();
+                                while (rs.next()){
+                                    Books book = getBookById(rs.getInt("id"));
+                                    Librarian approvedBy = getLibrarianById(rs.getInt("approvedBy"));
+                                    Librarian receivedBy = getLibrarianById(rs.getInt("receivedBy"));
+                                    Transaction transaction = new Transaction(
+                                            patron,
+                                            book,
+                                            approvedBy,
+                                            receivedBy,
+                                            rs.getTimestamp("date_borrowed"),
+                                            rs.getTimestamp("date_received"),
+                                            rs.getBoolean("isReturned")
+                                            );
+                                    transactions.add(transaction);
+                                }
+                                    Platform.runLater(() -> Ttable.setItems(transactions));
+>>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
 
                             }
                         }
@@ -195,11 +228,18 @@ public class TransactionHistoryController {
         } catch (NumberFormatException e) {
             showAlert(AlertType.ERROR, "Form Error!", "Invalid Entry");
         }
+<<<<<<< HEAD
         showTransactions(transactions);
     }
 
     //method to retrieve book by its ID
     public Books getBookById(int bookId){
+=======
+    }
+
+    //method to retrieve book by its ID
+    public Books getBookById(int bookId) {
+>>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
         String query = "SELECT * FROM Books WHERE id = ?";
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -221,7 +261,11 @@ public class TransactionHistoryController {
     }
     //to fetch librarian by Id
     public Librarian getLibrarianById(int librarianId) {
+<<<<<<< HEAD
         String query = "SELECT * FROM librarian WHERE librarian_id = ?";
+=======
+        String query = "SELECT * FROM Librarians WHERE librarian_id = ?";
+>>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, librarianId);
@@ -261,6 +305,7 @@ public class TransactionHistoryController {
         return null;
     }
 
+<<<<<<< HEAD
     public void showTransactions(ObservableList<Transaction> transaction) {
         ColBook.setCellValueFactory(new PropertyValueFactory("bookTitle"));
         ColBorrowed.setCellValueFactory(new PropertyValueFactory("dateBorrowed"));
@@ -269,6 +314,8 @@ public class TransactionHistoryController {
         ColReceivedBy.setCellValueFactory(new PropertyValueFactory("receiveName"));
         Ttable.setItems(transaction);
     }
+=======
+>>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
 
 
 }

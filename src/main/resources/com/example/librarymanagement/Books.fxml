@@ -12,7 +12,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<<<<<<< HEAD
 <?import javafx.scene.control.RadioButton?>
+=======
+>>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.MainController">
     <children>
         <SplitPane dividerPositions="0.31307692307692303" layoutX="10.0" layoutY="8.0" prefHeight="582.0" prefWidth="781.0">
@@ -89,7 +92,10 @@
                                 <Font size="16.0" />
                             </font>
                         </Text>
+<<<<<<< HEAD
                         <RadioButton layoutX="464.0" layoutY="3.0" mnemonicParsing="false" text="Home" onAction="#backtoFrontPage" />
+=======
+>>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
                     </children>
                 </AnchorPane>
             </items>
