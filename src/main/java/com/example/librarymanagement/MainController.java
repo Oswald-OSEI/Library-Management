@@ -181,7 +181,7 @@ public class MainController {
                 case "title":
                     updateSQL = "UPDATE books SET title = ? WHERE id = ?";
                     break;
-                case "quantitiesinstock":
+                case "stock":
                     updateSQL = "UPDATE books SET quantitiesInStock = ? WHERE id = ?";
                     break;
                 case "available":
@@ -190,7 +190,7 @@ public class MainController {
                 case "author":
                     updateSQL = "UPDATE books SET author = ? WHERE id = ?";
                     break;
-                case "numberofpages":
+                case "pages":
                     updateSQL = "UPDATE books SET numberOfPages = ? WHERE id = ?";
                     break;
                 default:
@@ -202,8 +202,8 @@ public class MainController {
                  PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
 
                 switch (updateType.toLowerCase()) {
-                    case "quantitiesInStock":
-                    case "numberOfPages":
+                    case "stock":
+                    case "pages":
                         preparedStatement.setInt(1, Integer.parseInt(NValue));
                         break;
                     case "author":
