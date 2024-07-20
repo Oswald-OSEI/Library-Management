@@ -24,33 +24,53 @@
       <artifactId>javafx-fxml</artifactId>
       <version>21</version>
     </dependency>
-<<<<<<< HEAD
+
     <dependency>
       <groupId>com.mysql</groupId>
       <artifactId>mysql-connector-j</artifactId>
       <version>8.4.0</version>
     </dependency>
-=======
 
->>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
 <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
-<<<<<<< HEAD
+
+    </dependency>
+
+    <!-- JUnit Jupiter API for writing tests -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.9.2</version>
+        <scope>test</scope>
+    </dependency>
+    
+    <!-- JUnit Jupiter Engine for running tests -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>5.9.2</version>
+        <scope>test</scope>
+    </dependency>
+    
+    <!-- JUnit Jupiter Params for parameterized tests -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>5.9.2</version>
+        <scope>test</scope>
     </dependency>
 
   </dependencies>
-=======
-    </dependency>  </dependencies>
->>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
 
   <build>
     <plugins>

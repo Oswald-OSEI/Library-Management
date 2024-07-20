@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<<<<<<< HEAD
 <?import javafx.scene.control.RadioButton?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="616.0" prefWidth="867.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.TransactionHistoryController">
     <children>
@@ -53,50 +52,4 @@
         <Button fx:id="PAdd" layoutX="19.0" layoutY="375.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="179.0" text="Add Patron" onAction="#addPatron" />
         <TextField fx:id="PNumber" layoutX="19.0" layoutY="165.0" promptText="Telephone Number" />
     </children>
-=======
-
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="616.0" prefWidth="867.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.TransactionHistoryController">
-   <children>
-      <SplitPane layoutX="213.0" prefHeight="616.0" prefWidth="657.0">
-         <items>
-            <SplitPane dividerPositions="0.06902472527472528" orientation="VERTICAL" prefHeight="582.0" prefWidth="634.0">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="38.0" prefWidth="596.0">
-                     <children>
-                        <Text fill="#7b2828" layoutX="137.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transaction History " textAlignment="CENTER" underline="true" wrappingWidth="398.1367301940918">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="570.0" prefWidth="636.0">
-                     <children>
-                        <TableView fx:id="Ttable" layoutX="1.0" layoutY="1.0" prefHeight="570.0" prefWidth="656.0">
-                          <columns>
-                            <TableColumn fx:id="ColBook" prefWidth="164.00001215934753" text="Book" />
-                            <TableColumn fx:id="ColBorrowed" prefWidth="119.20002746582031" text="Date Borrowed" />
-                              <TableColumn fx:id="ColApproved" prefWidth="161.60003662109375" text="Approved By" />
-                              <TableColumn fx:id="ColReturned" prefWidth="100.79998779296875" text="Date Returned" />
-                              <TableColumn fx:id="ColReceivedBy" prefWidth="121.5999755859375" text="Received By" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-              </items>
-            </SplitPane>
-         </items>
-      </SplitPane>
-      <TextField fx:id="PName" layoutX="19.0" layoutY="26.0" promptText="Patron Name" />
-      <TextField fx:id="PID" layoutX="19.0" layoutY="73.0" promptText="Patron ID" />
-      <TextField fx:id="Ppassword" layoutX="19.0" layoutY="214.0" promptText="Patron Password" />
-      <Button fx:id="ApproveB" layoutX="19.0" layoutY="501.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="179.0" text="Proceed to Approve Borrowing" onAction="#switchToApproval" />
-      <Button fx:id="ApproveR" layoutX="19.0" layoutY="562.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="179.0" text="Proceed to Receive Book" onAction="#switchToApproval"/>
-      <Button fx:id="Pcheck" layoutX="19.0" layoutY="441.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="179.0" text="Check Patron History" onAction="#getPatron"/>
-      <TextField fx:id="PEmail" layoutX="19.0" layoutY="117.0" promptText="Patron Email" />
-      <Button fx:id="PAdd" layoutX="19.0" layoutY="375.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="179.0" text="Add Patron" onAction="#addPatron" />
-      <TextField fx:id="PNumber" layoutX="19.0" layoutY="165.0" promptText="Telephone Number" />
-   </children>
->>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
 </AnchorPane>
