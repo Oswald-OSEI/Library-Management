@@ -202,8 +202,8 @@ public class MainController {
                  PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
 
                 switch (updateType.toLowerCase()) {
-                    case "quantitiesInStock":
-                    case "numberOfPages":
+                    case "stock":
+                    case "pages":
                         preparedStatement.setInt(1, Integer.parseInt(NValue));
                         break;
                     case "author":
