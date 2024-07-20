@@ -9,35 +9,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-<<<<<<< HEAD
-import javafx.stage.Stage;
-import javafx.scene.control.cell.PropertyValueFactory;
-import java.io.IOException;
-import java.net.URL;
-=======
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
->>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
 import java.sql.*;
-import java.lang.*;
 import java.util.Objects;
 
 public class TransactionHistoryController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-<<<<<<< HEAD
     ObservableList<Transaction> transactions = FXCollections.observableArrayList();
-=======
->>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
 
     @FXML
     public void switchToApproval(ActionEvent event) throws IOException {
@@ -93,9 +78,9 @@ public class TransactionHistoryController {
     @FXML
     private TableColumn<?, ?> ColReceivedBy;
 
-    private Connection getConnection(){
+    private Connection getConnection() {
         Connection conn;
-        try{
+        try {
             conn = DriverManager.getConnection(Mains.URL, Mains.USER, Mains.PASSWORD);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -104,19 +89,16 @@ public class TransactionHistoryController {
     }
     Connection conn = getConnection();
 
-<<<<<<< HEAD
     @FXML
     void backtoFrontPage(ActionEvent event) throws IOException {
-        this.root = (Parent)FXMLLoader.load((URL)Objects.requireNonNull(this.getClass().getResource("front page.fxml")));
-        this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        this.root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("front page.fxml")));
+        this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         this.scene = new Scene(this.root);
         this.stage.setScene(this.scene);
         this.stage.show();
     }
 
-=======
->>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
-    //function to add a patron
+    // function to add a patron
     @FXML
     private void addPatron() {
         String name = PName.getText();
@@ -127,21 +109,22 @@ public class TransactionHistoryController {
             showAlert(Alert.AlertType.ERROR, "Form Error!", "Please fill in all fields.");
             return;
         }
-        try{
-        Patron patron = new Patron(name, email, telNumber, password);
-        patron.addPatron(patron);
-        showAlert(AlertType.INFORMATION, "Success!", "Patron added successfully.");
-        // Clear input fields
-        PName.clear();
-        PEmail.clear();
-        PNumber.clear();
-        Ppassword.clear();
-    } catch (NumberFormatException e) {
-        showAlert(AlertType.ERROR, "Form Error!", "Invalid Entry");
+        try {
+            Patron patron = new Patron(name, email, telNumber, password);
+            patron.addPatron(patron);
+            showAlert(AlertType.INFORMATION, "Success!", "Patron added successfully.");
+            // Clear input fields
+            PName.clear();
+            PEmail.clear();
+            PNumber.clear();
+            Ppassword.clear();
+        } catch (NumberFormatException e) {
+            showAlert(AlertType.ERROR, "Form Error!", "Invalid Entry");
+        }
     }
-    }
+
     @FXML
-    private void showAlert (Alert.AlertType alertType, String title, String message){
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setContentText(message);
@@ -161,85 +144,57 @@ public class TransactionHistoryController {
         try {
             int patronId = Integer.parseInt(patronID);
             String query = "SELECT * FROM Patrons WHERE patron_id = ? AND name = ? AND password = ?";
-            try (PreparedStatement preparedStatement = conn.prepareStatement(query)){
-                    preparedStatement.setInt(1, patronId);
-                    preparedStatement.setString(2, name);
-                    preparedStatement.setString(3, password);
-                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                        if (resultSet.next()) {
-                            Patron patron = new Patron(
-                                    resultSet.getString("name"),
-                                    resultSet.getString("email"),
-                                    resultSet.getString("tel_number"),
-                                    resultSet.getString("password")
-                            );
-                            patron.setPersonId(patronId);
-                            String query1 = "SELECT * FROM Transaction WHERE patron_id = ?";
-                            try (PreparedStatement pS = conn.prepareStatement(query1)){
-                                pS.setInt(1, patron.getPersonId());
-                                try(ResultSet rs = pS.executeQuery()){
-<<<<<<< HEAD
-                                while (rs.next()){
-                                    Books book = this.getBookById(rs.getInt("book_id"));
-                                    String book_title = book.getTitle();
-                                    Librarian approvedBy = this.getLibrarianById(rs.getInt("approved_by"));
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setInt(1, patronId);
+                preparedStatement.setString(2, name);
+                preparedStatement.setString(3, password);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        Patron patron = new Patron(
+                                resultSet.getString("name"),
+                                resultSet.getString("email"),
+                                resultSet.getString("tel_number"),
+                                resultSet.getString("password")
+                        );
+                        patron.setPersonId(patronId);
+                        String query1 = "SELECT * FROM Transaction WHERE patron_id = ?";
+                        try (PreparedStatement pS = conn.prepareStatement(query1)) {
+                            pS.setInt(1, patron.getPersonId());
+                            try (ResultSet rs = pS.executeQuery()) {
+                                while (rs.next()) {
+                                    Books book = getBookById(rs.getInt("book_id"));
+                                    String bookTitle = book.getTitle();
+                                    Librarian approvedBy = getLibrarianById(rs.getInt("approved_by"));
                                     String approvee = approvedBy.getName();
-                                    Librarian receivedBy = this.getLibrarianById(rs.getInt("received_by"));
+                                    Librarian receivedBy = getLibrarianById(rs.getInt("received_by"));
                                     String receiver = receivedBy != null ? receivedBy.getName() : "Not Returned";
                                     Transaction transaction = new Transaction(patron, book, approvedBy, receivedBy, rs.getTimestamp("date_borrowed"), rs.getTimestamp("date_returned"), rs.getBoolean("is_returned"));
-                                    transaction.setBookTitle(book_title);
+                                    transaction.setBookTitle(bookTitle);
                                     transaction.setApprovalName(approvee);
                                     transaction.setReceiveName(receiver);
                                     transactions.add(transaction);
                                 }
-
-=======
-                                    ObservableList<Transaction> transactions = FXCollections.observableArrayList();
-                                while (rs.next()){
-                                    Books book = getBookById(rs.getInt("id"));
-                                    Librarian approvedBy = getLibrarianById(rs.getInt("approvedBy"));
-                                    Librarian receivedBy = getLibrarianById(rs.getInt("receivedBy"));
-                                    Transaction transaction = new Transaction(
-                                            patron,
-                                            book,
-                                            approvedBy,
-                                            receivedBy,
-                                            rs.getTimestamp("date_borrowed"),
-                                            rs.getTimestamp("date_received"),
-                                            rs.getBoolean("isReturned")
-                                            );
-                                    transactions.add(transaction);
-                                }
-                                    Platform.runLater(() -> Ttable.setItems(transactions));
->>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
-
+                                Platform.runLater(() -> Ttable.setItems(transactions));
                             }
                         }
-                        // Clear input field
+                        // Clear input fields
                         PName.clear();
                         PEmail.clear();
                         PNumber.clear();
                         Ppassword.clear();
                     }
-                    }
-                } catch (SQLException e) {
+                }
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         } catch (NumberFormatException e) {
             showAlert(AlertType.ERROR, "Form Error!", "Invalid Entry");
         }
-<<<<<<< HEAD
         showTransactions(transactions);
     }
 
-    //method to retrieve book by its ID
-    public Books getBookById(int bookId){
-=======
-    }
-
-    //method to retrieve book by its ID
+    // method to retrieve book by its ID
     public Books getBookById(int bookId) {
->>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
         String query = "SELECT * FROM Books WHERE id = ?";
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -259,13 +214,10 @@ public class TransactionHistoryController {
         }
         return null;
     }
-    //to fetch librarian by Id
+
+    // to fetch librarian by Id
     public Librarian getLibrarianById(int librarianId) {
-<<<<<<< HEAD
-        String query = "SELECT * FROM librarian WHERE librarian_id = ?";
-=======
-        String query = "SELECT * FROM Librarians WHERE librarian_id = ?";
->>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
+        String query = "SELECT * FROM Librarian WHERE librarian_id = ?";
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, librarianId);
@@ -284,6 +236,7 @@ public class TransactionHistoryController {
         }
         return null;
     }
+
     public Patron getPatronById(int patronId) {
         String query = "SELECT * FROM Patrons WHERE patron_id = ?";
         try (Connection connection = getConnection();
@@ -305,17 +258,12 @@ public class TransactionHistoryController {
         return null;
     }
 
-<<<<<<< HEAD
-    public void showTransactions(ObservableList<Transaction> transaction) {
-        ColBook.setCellValueFactory(new PropertyValueFactory("bookTitle"));
-        ColBorrowed.setCellValueFactory(new PropertyValueFactory("dateBorrowed"));
-        ColApproved.setCellValueFactory(new PropertyValueFactory("approvalName"));
-        ColReturned.setCellValueFactory(new PropertyValueFactory("dateReturned"));
-        ColReceivedBy.setCellValueFactory(new PropertyValueFactory("receiveName"));
-        Ttable.setItems(transaction);
+    public void showTransactions(ObservableList<Transaction> transactions) {
+        ColBook.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
+        ColBorrowed.setCellValueFactory(new PropertyValueFactory<>("dateBorrowed"));
+        ColApproved.setCellValueFactory(new PropertyValueFactory<>("approvalName"));
+        ColReturned.setCellValueFactory(new PropertyValueFactory<>("dateReturned"));
+        ColReceivedBy.setCellValueFactory(new PropertyValueFactory<>("receiveName"));
+        Ttable.setItems(transactions);
     }
-=======
->>>>>>> 24665cb4a3176ee5fa718ba53264b18216591652
-
-
 }

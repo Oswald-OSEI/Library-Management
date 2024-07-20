@@ -62,6 +62,10 @@ public class Books{
         this.author = author;
     }
 
+    public boolean getAvailable(){
+       return this.available;
+    }
+
    public void addBook(Books books){
     books.saveToDatabase();
     System.out.println("Book added successfully");

@@ -17,64 +17,27 @@ import java.sql.*;
 import java.util.Objects;
 
 public class approvalController {
+
+    @FXML
+    private TextField BBookID, BTitle, PBName, bPpassword, LPId, LPpassword, LPId1, LPpassword1, PBID;
+    @FXML
+    private Button Approve, ReceiveButton, loginButton;
+    @FXML
+    private TextField BookID, PID, Ppassword, loginID, loginEmail, loginPassword;
+
     private Stage stage;
-
     private Scene scene;
-
     private Parent root;
 
-    @FXML
-    private TextField BBookID;
+    private final Connection conn = getConnection();
 
-    @FXML
-    private TextField BTitle;
-
-    @FXML
-    private TextField PBName;
-
-    @FXML
-    private TextField bPpassword;
-
-    @FXML
-    private TextField LPId;
-
-    @FXML
-    private TextField LPpassword;
-
-    @FXML
-    private TextField LPId1;
-
-    @FXML
-    private TextField LPpassword1;
-
-    @FXML
-    private TextField PBID;
-
-    @FXML
-    private Button Approve;
-
-    @FXML
-    private TextField BookID;
-
-    @FXML
-    private TextField PID;
-
-    @FXML
-    private TextField Ppassword;
-
-    @FXML
-    private Button ReceiveButton;
-    @FXML
-    private TextField loginID;
-
-    @FXML
-    private TextField loginEmail;
-
-    @FXML
-    private TextField loginPassword;
-
-    @FXML
-    private Button loginButton;
+    private Connection getConnection() {
+        try {
+            return DriverManager.getConnection(Mains.URL, Mains.USER, Mains.PASSWORD);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
@@ -93,28 +56,14 @@ public class approvalController {
         }
     }
 
-
-    private Connection getConnection() {
-        Connection conn;
-        try {
-            conn = DriverManager.getConnection(Mains.URL, Mains.USER, Mains.PASSWORD);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return conn;
-    }
-
-    Connection conn = getConnection();
-
     @FXML
     void backtoFrontPage(ActionEvent event) throws IOException {
-        this.root = (Parent)FXMLLoader.load((URL)Objects.requireNonNull(this.getClass().getResource("front page.fxml")));
-        this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        this.root = (Parent) FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("front page.fxml")));
+        this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         this.scene = new Scene(this.root);
         this.stage.setScene(this.scene);
         this.stage.show();
     }
-
 
     @FXML
     void login(ActionEvent event) throws IOException {
@@ -139,7 +88,6 @@ public class approvalController {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
                         showAlert(Alert.AlertType.INFORMATION, "Success", "Login successful!");
-                        // Proceed to the next scene or functionality
                         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("front page.fxml")));
                         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         scene = new Scene(root);
@@ -156,7 +104,7 @@ public class approvalController {
     }
 
     @FXML
-    void approveBorrowing(ActionEvent event) throws SQLException {
+    void approveBorrowing(ActionEvent event) {
         String bookID = BBookID.getText();
         String title = BTitle.getText();
         String patronID = PBID.getText();
@@ -174,6 +122,7 @@ public class approvalController {
             int bID = Integer.parseInt(bookID);
             int pID = Integer.parseInt(patronID);
             int LId = Integer.parseInt(librarianId);
+
             //verify Book credentials
             String verifyBook = "SELECT * FROM books WHERE id = ? AND title = ?";
             try (PreparedStatement ps = conn.prepareStatement(verifyBook)) {
@@ -241,7 +190,7 @@ public class approvalController {
 
 
     @FXML
-    void approveReturn(ActionEvent event) {
+    void approveReturn() {
         String bookID = BookID.getText();
         String patronID = PID.getText();
         String patronPassword = Ppassword.getText();
@@ -309,7 +258,7 @@ public class approvalController {
                     }
                 }
             }
-        }catch(SQLException | NumberFormatException e){
+        } catch (SQLException | NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "Form Error!", "An error occurred: " + e.getMessage());
         }
     }
