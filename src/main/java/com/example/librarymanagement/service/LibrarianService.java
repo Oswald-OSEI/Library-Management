@@ -6,7 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.example.librarymanagement.main.Mains;
+import com.example.librarymanagement.mainClasses.Mains;
+import com.example.librarymanagement.models.Librarian;
 
 public class LibrarianService {
     BookService bookService = new BookService();
@@ -152,6 +153,26 @@ public class LibrarianService {
        
     }
     return output;
+    }
+
+    public Librarian getLibrarianById(int librarianId) {
+        Librarian librarian = new Librarian();
+        String query = "SELECT * FROM Librarian WHERE librarian_id = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, librarianId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                            librarian.setName(resultSet.getString("name"));
+                            librarian.setEmail(resultSet.getString("email"));
+                            librarian.setTelNumber(resultSet.getString("tel_number"));
+                            librarian.setPassword(resultSet.getString("password"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return librarian;
     }
 }
 

@@ -1,5 +1,5 @@
 
-package com.example.librarymanagement;
+package com.example.librarymanagement.models;
 
 import java.util.Date;
 
@@ -16,6 +16,8 @@ public class Transaction {
     private Date dateBorrowed;
     private Date dateReturned;
     private boolean isReturned;
+
+    public Transaction(){}
 
     public Transaction(Patron patron, Books book, Librarian approvedBy, Librarian receivedBy, Date dateBorrowed, Date dateReturned, boolean isReturned) {
         this.patron = patron;

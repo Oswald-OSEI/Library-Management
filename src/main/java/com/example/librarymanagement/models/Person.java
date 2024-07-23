@@ -1,4 +1,4 @@
-package com.example.librarymanagement;
+package com.example.librarymanagement.models;
 
 public abstract class Person {
     protected int personId;
@@ -6,6 +6,8 @@ public abstract class Person {
     protected String email;
     protected String telNumber;
     protected String password;
+
+    public Person(){}
 
     public Person( String name, String email, String telNumber, String password) {
         this.name = name;

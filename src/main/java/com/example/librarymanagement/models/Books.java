@@ -8,6 +8,8 @@ public class Books{
     private int numberOfPages;
     private boolean available;
 
+    public Books(){}
+
     public Books( String title,int numberOfPages,int quantitiesInStock, String author){
     this.title = title;
     this.numberOfPages = numberOfPages;

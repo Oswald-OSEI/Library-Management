@@ -1,4 +1,4 @@
-package com.example.librarymanagement;
+package com.example.librarymanagement.mainClasses;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/librarymanagement/SignUp.fxml"));
             AnchorPane root = fxmlLoader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

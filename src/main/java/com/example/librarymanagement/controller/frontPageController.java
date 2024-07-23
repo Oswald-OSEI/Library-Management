@@ -19,7 +19,7 @@ public class frontPageController {
 
         @FXML
         public void switchToUpdateBookDatabase(ActionEvent event) throws IOException {
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Books.fxml")));
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/librarymanagement/Books.fxml")));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
@@ -28,7 +28,7 @@ public class frontPageController {
 
         @FXML
         public void switchToApproveTransaction(ActionEvent event) throws IOException {
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TransactionHistory.fxml")));
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/librarymanagement/TransactionHistory.fxml")));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);

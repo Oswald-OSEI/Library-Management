@@ -4,10 +4,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import com.example.librarymanagement.main.Mains;
+import com.example.librarymanagement.mainClasses.Mains;
 
 // Patron.java
 public class Patron extends Person {
+
+        public Patron(){}
+
         public Patron(String name, String email, String telNumber, String password) {
             super(name, email, telNumber, password);
         }

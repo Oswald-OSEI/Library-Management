@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import com.example.librarymanagement.main.Mains;
+import com.example.librarymanagement.mainClasses.Mains;
 import com.example.librarymanagement.service.BookService;
 import com.example.librarymanagement.service.LibrarianService;
 
@@ -55,7 +55,7 @@ public class approvalController {
 
     @FXML
     void backtoFrontPage(ActionEvent event) throws IOException {
-        this.root = (Parent) FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("front page.fxml")));
+        this.root = (Parent) FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/com/example/librarymanagement/front page.fxml")));
         this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         this.scene = new Scene(this.root);
         this.stage.setScene(this.scene);
@@ -78,7 +78,7 @@ public class approvalController {
             int output = librarianService.login(librarianID, email, password);
                     if (output == 1) {
                         showAlert(Alert.AlertType.INFORMATION, "Success", "Login successful!");
-                        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("front page.fxml")));
+                        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/librarymanagement/front page.fxml")));
                         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         scene = new Scene(root);
                         stage.setScene(scene);

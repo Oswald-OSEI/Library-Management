@@ -1,6 +1,10 @@
 package com.example.librarymanagement.controller;
-import com.example.librarymanagement.main.Mains;
+import com.example.librarymanagement.mainClasses.Mains;
 
+import com.example.librarymanagement.models.Librarian;
+import com.example.librarymanagement.models.Patron;
+import com.example.librarymanagement.service.LibrarianService;
+import com.example.librarymanagement.service.PatronService;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +30,7 @@ public class TransactionHistoryController {
     private Scene scene;
     private Parent root;
     ObservableList<Transaction> transactions = FXCollections.observableArrayList();
+    PatronService patronService = new PatronService();
 
     @FXML
     public void switchToApproval(ActionEvent event) throws IOException {
@@ -113,14 +118,14 @@ public class TransactionHistoryController {
             return;
         }
         try {
-            Patron patron = new Patron(name, email, telNumber, password);
-            patron.addPatron(patron);
+            int output = patronService.addPatron(name, email, telNumber, password);
+            if (output == 1){
             showAlert(AlertType.INFORMATION, "Success!", "Patron added successfully.");
             // Clear input fields
             PName.clear();
             PEmail.clear();
             PNumber.clear();
-            Ppassword.clear();
+            Ppassword.clear();}
         } catch (NumberFormatException e) {
             showAlert(AlertType.ERROR, "Form Error!", "Invalid Entry");
         }
@@ -146,120 +151,22 @@ public class TransactionHistoryController {
         }
         try {
             int patronId = Integer.parseInt(patronID);
-            String query = "SELECT * FROM Patrons WHERE patron_id = ? AND name = ? AND password = ?";
-            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                preparedStatement.setInt(1, patronId);
-                preparedStatement.setString(2, name);
-                preparedStatement.setString(3, password);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        Patron patron = new Patron(
-                                resultSet.getString("name"),
-                                resultSet.getString("email"),
-                                resultSet.getString("tel_number"),
-                                resultSet.getString("password")
-                        );
-                        patron.setPersonId(patronId);
-                        String query1 = "SELECT * FROM Transaction WHERE patron_id = ?";
-                        try (PreparedStatement pS = conn.prepareStatement(query1)) {
-                            pS.setInt(1, patron.getPersonId());
-                            try (ResultSet rs = pS.executeQuery()) {
-                                while (rs.next()) {
-                                    Books book = getBookById(rs.getInt("book_id"));
-                                    String bookTitle = book.getTitle();
-                                    Librarian approvedBy = getLibrarianById(rs.getInt("approved_by"));
-                                    String approvee = approvedBy.getName();
-                                    Librarian receivedBy = getLibrarianById(rs.getInt("received_by"));
-                                    String receiver = receivedBy != null ? receivedBy.getName() : "Not Returned";
-                                    Transaction transaction = new Transaction(patron, book, approvedBy, receivedBy, rs.getTimestamp("date_borrowed"), rs.getTimestamp("date_returned"), rs.getBoolean("is_returned"));
-                                    transaction.setBookTitle(bookTitle);
-                                    transaction.setApprovalName(approvee);
-                                    transaction.setReceiveName(receiver);
-                                    transactions.add(transaction);
-                                }
-                                Platform.runLater(() -> Ttable.setItems(transactions));
-                            }
-                        }
-                        // Clear input fields
-                        PName.clear();
-                        PEmail.clear();
-                        PNumber.clear();
-                        Ppassword.clear();
-                    }
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            Transaction transaction = patronService.getPatronHistory(patronId, name, password);
+            transactions.add(transaction);
+            Platform.runLater(() -> Ttable.setItems(transactions));
+            // Clear input fields
+            PName.clear();
+            PEmail.clear();
+            PNumber.clear();
+            Ppassword.clear();
         } catch (NumberFormatException e) {
             showAlert(AlertType.ERROR, "Form Error!", "Invalid Entry");
         }
         showTransactions(transactions);
     }
 
-    // method to retrieve book by its ID
-    public Books getBookById(int bookId) {
-        String query = "SELECT * FROM Books WHERE id = ?";
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, bookId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return new Books(
-                            resultSet.getString("title"),
-                            resultSet.getInt("numberOfPages"),
-                            resultSet.getInt("quantitiesInStock"),
-                            resultSet.getString("author")
-                    );
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
-    // to fetch librarian by Id
-    public Librarian getLibrarianById(int librarianId) {
-        String query = "SELECT * FROM Librarian WHERE librarian_id = ?";
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, librarianId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return new Librarian(
-                            resultSet.getString("name"),
-                            resultSet.getString("email"),
-                            resultSet.getString("tel_number"),
-                            resultSet.getString("password")
-                    );
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
-    public Patron getPatronById(int patronId) {
-        String query = "SELECT * FROM Patrons WHERE patron_id = ?";
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, patronId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return new Patron(
-                            resultSet.getString("name"),
-                            resultSet.getString("email"),
-                            resultSet.getString("tel_number"),
-                            resultSet.getString("password")
-                    );
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public void showTransactions(ObservableList<Transaction> transactions) {
         ColBook.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));

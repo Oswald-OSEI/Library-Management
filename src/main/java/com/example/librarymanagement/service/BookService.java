@@ -1,11 +1,8 @@
 package com.example.librarymanagement.service;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
-import com.example.librarymanagement.main.Mains;
+import com.example.librarymanagement.mainClasses.Mains;
 import com.example.librarymanagement.models.Books;
 
 public class BookService {
@@ -102,6 +99,26 @@ public class BookService {
             }
             return rowsAffected;
 
+    }
+
+    public Books getBookById(int bookId) {
+        Books book = new Books();
+        String query = "SELECT * FROM Books WHERE id = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, bookId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                            book.setTitle(resultSet.getString("title"));
+                            book.setNumberOfPages(resultSet.getInt("numberOfPages"));
+                            book.setQuantitiesInStock(resultSet.getInt("quantitiesInStock"));
+                            book.setAuthor(resultSet.getString("author"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return book;
     }
 
         
