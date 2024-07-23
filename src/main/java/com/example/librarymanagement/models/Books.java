@@ -1,8 +1,4 @@
-package com.example.librarymanagement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+package com.example.librarymanagement.models;
 
 public class Books{
     private int bookId;
@@ -12,7 +8,7 @@ public class Books{
     private int numberOfPages;
     private boolean available;
 
-   Books( String title,int numberOfPages,int quantitiesInStock, String author){
+    public Books( String title,int numberOfPages,int quantitiesInStock, String author){
     this.title = title;
     this.numberOfPages = numberOfPages;
     this.quantitiesInStock = quantitiesInStock;
@@ -66,33 +62,6 @@ public class Books{
        return this.available;
     }
 
-   public void addBook(Books books){
-    books.saveToDatabase();
-    System.out.println("Book added successfully");
-   }
-   // Method to get a connection to the database
-   private Connection getConnection() throws SQLException {
-    return DriverManager.getConnection(Mains.URL, Mains.USER, Mains.PASSWORD);
 }
-
-// Method to save the book to the database
-private void saveToDatabase() {
-    String query = "INSERT INTO books (title, quantitiesInStock, available, author, numberOfPages) VALUES (?, ?, ?, ?, ?)";
-
-    try (Connection connection = getConnection();
-         PreparedStatement statement = connection.prepareStatement(query)) {
-
-        statement.setString(1, title);
-        statement.setInt(2, quantitiesInStock);
-        statement.setBoolean(3, available);
-        statement.setString(4, author);
-        statement.setInt(5, numberOfPages);
-        statement.executeUpdate();
-        System.out.println("Book added to database successfully.");
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
-
-}
+ 
 

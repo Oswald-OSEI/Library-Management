@@ -1,4 +1,5 @@
-package com.example.librarymanagement;
+package com.example.librarymanagement.controller;
+import com.example.librarymanagement.main.Mains;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -17,6 +18,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Objects;
+
+import com.example.librarymanagement.models.Transaction;
 
 public class TransactionHistoryController {
     private Stage stage;

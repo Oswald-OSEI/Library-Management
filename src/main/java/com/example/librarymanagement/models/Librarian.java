@@ -1,6 +1,10 @@
-package com.example.librarymanagement;
+package com.example.librarymanagement.models;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-import java.sql.*;
+import com.example.librarymanagement.main.Mains;
 
 public class Librarian extends Person {
 

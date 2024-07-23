@@ -1,4 +1,7 @@
-package com.example.librarymanagement;
+package com.example.librarymanagement.controller;
+import com.example.librarymanagement.models.Books;
+import com.example.librarymanagement.main.Mains;
+import com.example.librarymanagement.service.BookService;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -17,15 +20,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.Objects;
-import java.lang.*;
+
+
+
 public class MainController {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    BookService bookService = new BookService();
         @FXML
         private TextField VType;
         @FXML
@@ -105,7 +112,6 @@ public class MainController {
         }
 
         @FXML
-
         private void addBook() {
             String title = TXTITLE.getText();
             String pagesText = TXPAGES.getText();
@@ -120,12 +126,9 @@ public class MainController {
             try {
                 int pages = Integer.parseInt(pagesText);
                 int quantitiesInStock = Integer.parseInt(quantitiesInStockText);
-
                 Books book = new Books(title, pages, quantitiesInStock, author);
-                book.addBook(book);
+                bookService.addBook(book);
                 showAlert(AlertType.INFORMATION, "Success!", "Book added successfully.");
-
-
                 // Clear input fields
                 TXID.clear();
                 TXTITLE.clear();
@@ -143,89 +146,32 @@ public class MainController {
         private void deleteBookById() {
             String id = TXID1.getText();
             int bookId = Integer.parseInt(id);
-            String deleteSQL = "DELETE FROM books WHERE id = ?";
+            int rowsAffected = bookService.deleteById(bookId);
+            
+            if (rowsAffected > 0) {
+                showAlert(AlertType.INFORMATION, "Success!", "Book deleted successfully.");
+                Platform.runLater(() -> TABLE.refresh());
 
-            try (Connection connection = getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
-
-                // Set the parameter for the query
-                preparedStatement.setInt(1, bookId);
-
-                // Execute the delete query
-                int rowsAffected = preparedStatement.executeUpdate();
-                if (rowsAffected > 0) {
-                    showAlert(AlertType.INFORMATION, "Success!", "Book deleted successfully.");
-                    Platform.runLater(() -> TABLE.refresh());
-
-                } else {
-                    showAlert(AlertType.INFORMATION, "Unsuccessfull", "Book Id doesn't exist");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } else {
+                showAlert(AlertType.INFORMATION, "Unsuccessfull", "Book Id doesn't exist");
             }
             bookList.clear();
             initialize();
         }
 
+        
         @FXML
         private void updateBookById() {
             int bookId = Integer.parseInt(TXID.getText()); // Assuming PBID is a TextField for entering the book ID
-
-            // Assuming updateType and newValue are predefined
+            // get updateType and newValue 
             String updateType = VType.getText();
             String NValue = newValue.getText(); // Replace newValue with the actual new value
-
-            String updateSQL = "";
-
-            switch (updateType.toLowerCase()) {
-                case "title":
-                    updateSQL = "UPDATE books SET title = ? WHERE id = ?";
-                    break;
-                case "stock":
-                    updateSQL = "UPDATE books SET quantitiesInStock = ? WHERE id = ?";
-                    break;
-                case "available":
-                    updateSQL = "UPDATE books SET available = ? WHERE id = ?";
-                    break;
-                case "author":
-                    updateSQL = "UPDATE books SET author = ? WHERE id = ?";
-                    break;
-                case "pages":
-                    updateSQL = "UPDATE books SET numberOfPages = ? WHERE id = ?";
-                    break;
-                default:
-                    showAlert(AlertType.INFORMATION, "Failed!", "Update type can't be performed.");
-                    return;
-            }
-
-            try (Connection connection = getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
-
-                switch (updateType.toLowerCase()) {
-                    case "stock":
-                    case "pages":
-                        preparedStatement.setInt(1, Integer.parseInt(NValue));
-                        break;
-                    case "author":
-                    case "title":
-                        preparedStatement.setString(1, NValue);
-                        break;
-                }
-
-                preparedStatement.setInt(2, bookId);
-
-                int rowsAffected = preparedStatement.executeUpdate();
+                int rowsAffected = bookService.updateById(bookId, NValue, updateType);
                 if (rowsAffected > 0) {
                     showAlert(AlertType.INFORMATION, "Success!", "Book updated successfully.");
                 } else {
                     showAlert(AlertType.INFORMATION, "Unsuccessful!", "Book doesn't exist. Check book ID entered.");
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid format for quantity: " + NValue);
-                e.printStackTrace();
-            }
             bookList.clear();
             initialize();
         }
