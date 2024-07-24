@@ -4,8 +4,8 @@ import java.sql.*;
 
 import com.example.librarymanagement.mainClasses.Mains;
 import com.example.librarymanagement.models.*;
-
-
+import java.util.ArrayList;
+import java.util.List;
 import com.example.librarymanagement.models.Transaction;
 import javafx.application.Platform;
 import javafx.scene.control.Alert.AlertType;
@@ -33,8 +33,9 @@ public class PatronService {
         return output;
     }
 
-    public Transaction getPatronHistory(int patronId, String name, String password) {
+    public List<Transaction> getPatronHistory(int patronId, String name, String password) {
         Transaction transaction = new Transaction();
+        List<Transaction> transactions = new ArrayList<>();
         String query = "SELECT * FROM Patrons WHERE patron_id = ? AND name = ? AND password = ?";
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
             preparedStatement.setInt(1, patronId);
@@ -64,6 +65,7 @@ public class PatronService {
                                 transaction.setBookTitle(bookTitle);
                                 transaction.setApprovalName(approvee);
                                 transaction.setReceiveName(receiver);
+                                transactions.add(transaction);
 
                             }
                         }
@@ -73,7 +75,7 @@ public class PatronService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return transaction;
+        return transactions;
     }
 
 public Patron getPatronById(int patronId) {

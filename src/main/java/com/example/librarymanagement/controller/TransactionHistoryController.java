@@ -22,10 +22,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Objects;
+import java.util.List;
 
 import com.example.librarymanagement.models.Transaction;
 
 public class TransactionHistoryController {
+
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -151,8 +153,8 @@ public class TransactionHistoryController {
         }
         try {
             int patronId = Integer.parseInt(patronID);
-            Transaction transaction = patronService.getPatronHistory(patronId, name, password);
-            transactions.add(transaction);
+            List <Transaction> transaction = patronService.getPatronHistory(patronId, name, password);
+            transactions.addAll(transaction);
             Platform.runLater(() -> Ttable.setItems(transactions));
             // Clear input fields
             PName.clear();
