@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import com.example.librarymanagement.mainClasses.Mains;
 import com.example.librarymanagement.models.Librarian;
+import com.example.librarymanagement.models.Patron;
 
 public class LibrarianService {
     BookService bookService = new BookService();
@@ -20,6 +21,13 @@ public class LibrarianService {
     }
 
      private final Connection conn = getConnection();
+
+    public int addLibrarian(int id, String name, String email, String telNumber, String password){
+        Librarian librarian = new Librarian(id, name, email, telNumber, password);
+        saveToDatabase(librarian);
+        int result = 1;
+        return result;
+    }
     
     public int login(int librarianID, String email, String password)
     {
@@ -70,7 +78,7 @@ public class LibrarianService {
                                         try (ResultSet reSet = prepStatement.executeQuery()) {
                                             if (reSet.next()) {
                                                 // Create transaction
-                                                String createTransactionQuery = "INSERT INTO Transaction (patron_id, book_id, date_borrowed, approved_by) VALUES (?, ?, NOW(), ?)";
+                                                String createTransactionQuery = "INSERT INTO Transaction (transaction_id ,patron_id, book_id, date_borrowed, approved_by) VALUES (?, ?, ?, NOW(), ?)";
                                                 try (PreparedStatement transactionStatement = conn.prepareStatement(createTransactionQuery)) {
                                                     transactionStatement.setInt(1, pID);
                                                     transactionStatement.setInt(2, bID);
@@ -134,13 +142,9 @@ public class LibrarianService {
                                                 if (rowsUpdated > 0) {
                                                     bookService.updateBookStock(bID, 1); // Increase the stock by 1
                                                    output = 1;
-                                                } else {
-                                                    output = 2;
-                                                }
+                                                } 
                                             }
-                                        } else {
-                                            output = 3;
-                                        }
+                                        } 
                                     }
                                 }
                             }
@@ -167,6 +171,7 @@ public class LibrarianService {
                             librarian.setEmail(resultSet.getString("email"));
                             librarian.setTelNumber(resultSet.getString("tel_number"));
                             librarian.setPassword(resultSet.getString("password"));
+                            librarian.setPersonId(resultSet.getInt("librarian_id"));
                 }
             }
         } catch (SQLException e) {
@@ -174,5 +179,23 @@ public class LibrarianService {
         }
         return librarian;
     }
+
+    //Method to save to database
+public void saveToDatabase(Librarian librarian) {
+        String query = "INSERT INTO librarian (librarian_id, name, email, tel_number, password) VALUES (?,?, ?, ?, ?)";
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, librarian.getPersonId());
+            statement.setString(2, librarian.getName());
+            statement.setString(3, librarian.getEmail());
+            statement.setString(4, librarian.getTelNumber());
+            statement.setString(5, librarian.getPassword());
+            statement.executeUpdate();
+            System.out.println("librarian added to database successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
 

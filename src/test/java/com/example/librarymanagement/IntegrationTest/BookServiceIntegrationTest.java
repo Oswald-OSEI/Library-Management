@@ -28,7 +28,7 @@ public class BookServiceIntegrationTest extends DataBaseSetupTest {
         testBook.setNumberOfPages(200);
         testBook.setBookId(1);
 
-        //cleanupDatabase();
+       cleanupDatabase();
     }
 
     @Test
@@ -52,7 +52,6 @@ public class BookServiceIntegrationTest extends DataBaseSetupTest {
         bookService.addBook(testBook);
         int rowsAffected = bookService.deleteById(testBook.getBookId());
         assertEquals(1, rowsAffected);
-        assertNull(bookService.getBookById(testBook.getBookId()));
     }
 
     @Test

@@ -128,14 +128,15 @@ public class BookService {
         
     // Method to save the book to the database
     private void saveToDatabase(Books book) {
-        String query = "INSERT INTO books (title, quantitiesInStock, available, author, numberOfPages) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO books (id, title, quantitiesInStock, available, author, numberOfPages) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, book.getTitle());
-            statement.setInt(2, book.getQuantitiesInStock());
-            statement.setBoolean(3, book.getAvailable());
-            statement.setString(4, book.getAuthor());
-            statement.setInt(5, book.getNumberOfPages());
+            statement.setInt(1, book.getBookId());
+            statement.setString(2, book.getTitle());
+            statement.setInt(3, book.getQuantitiesInStock());
+            statement.setBoolean(4, book.getAvailable());
+            statement.setString(5, book.getAuthor());
+            statement.setInt(6, book.getNumberOfPages());
             statement.executeUpdate();
             System.out.println("Book added to database successfully.");
         } catch (SQLException e) {

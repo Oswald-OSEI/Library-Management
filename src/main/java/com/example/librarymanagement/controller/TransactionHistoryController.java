@@ -1,10 +1,15 @@
 package com.example.librarymanagement.controller;
-import com.example.librarymanagement.mainClasses.Mains;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Objects;
 
-import com.example.librarymanagement.models.Librarian;
-import com.example.librarymanagement.models.Patron;
-import com.example.librarymanagement.service.LibrarianService;
+import com.example.librarymanagement.mainClasses.Mains;
+import com.example.librarymanagement.models.Transaction;
 import com.example.librarymanagement.service.PatronService;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,17 +19,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.sql.*;
-import java.util.Objects;
-import java.util.List;
-
-import com.example.librarymanagement.models.Transaction;
 
 public class TransactionHistoryController {
 
@@ -45,6 +47,9 @@ public class TransactionHistoryController {
 
     @FXML
     private TextField PName;
+
+    @FXML
+    private TextField sid;
 
     @FXML
     private TextField PID;
@@ -109,29 +114,31 @@ public class TransactionHistoryController {
     }
 
     // function to add a patron
-    @FXML
-    private void addPatron() {
-        String name = PName.getText();
-        String email = PEmail.getText();
-        String telNumber = PNumber.getText();
-        String password = Ppassword.getText();
-        if (name.isEmpty() || email.isEmpty() || telNumber.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Form Error!", "Please fill in all fields.");
-            return;
-        }
-        try {
-            int output = patronService.addPatron(name, email, telNumber, password);
-            if (output == 1){
-            showAlert(AlertType.INFORMATION, "Success!", "Patron added successfully.");
-            // Clear input fields
-            PName.clear();
-            PEmail.clear();
-            PNumber.clear();
-            Ppassword.clear();}
-        } catch (NumberFormatException e) {
-            showAlert(AlertType.ERROR, "Form Error!", "Invalid Entry");
-        }
-    }
+    // @FXML
+    // private void addPatron() {
+    //     String sid =  sid.getText();
+    //     String name = PName.getText();
+    //     String email = PEmail.getText();
+    //     String telNumber = PNumber.getText();
+    //     String password = Ppassword.getText();
+    //     if (sid.isEmpty() || name.isEmpty() || email.isEmpty() || telNumber.isEmpty() || password.isEmpty()) {
+    //         showAlert(Alert.AlertType.ERROR, "Form Error!", "Please fill in all fields.");
+    //         return;
+    //     }
+    //     int id = Integer.parseInt(sid);
+    //     try {
+    //         int output = patronService.addPatron(id, name, email, telNumber, password);
+    //         if (output == 1){
+    //         showAlert(AlertType.INFORMATION, "Success!", "Patron added successfully.");
+    //         // Clear input fields
+    //         PName.clear();
+    //         PEmail.clear();
+    //         PNumber.clear();
+    //         Ppassword.clear();}
+    //     } catch (NumberFormatException e) {
+    //         showAlert(AlertType.ERROR, "Form Error!", "Invalid Entry");
+    //     }
+    // }
 
     @FXML
     private void showAlert(Alert.AlertType alertType, String title, String message) {

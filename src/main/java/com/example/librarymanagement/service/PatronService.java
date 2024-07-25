@@ -30,8 +30,8 @@ public class PatronService {
     BookService bookService = new BookService();
     LibrarianService librarianService = new LibrarianService();
 
-    public int addPatron(String name, String email, String telNumber, String password) {
-        Patron patron = new Patron(name, email, telNumber, password);
+    public int addPatron(int id, String name, String email, String telNumber, String password) {
+        Patron patron = new Patron(id, name, email, telNumber, password);
         saveToDatabase(patron);
         int output = 1;
         return output;
@@ -105,12 +105,13 @@ public Patron getPatronById(int patronId) {
 
 //Method to save to database
 public void saveToDatabase(Patron patron) {
-        String query = "INSERT INTO patrons (name, email, tel_number, password) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO patrons (patron_id, name, email, tel_number, password) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, patron.getName());
-            statement.setString(2, patron.getEmail());
-            statement.setString(3, patron.getTelNumber());
-            statement.setString(4, patron.getPassword());
+            statement.setInt(1, patron.getPersonId());
+            statement.setString(2, patron.getName());
+            statement.setString(3, patron.getEmail());
+            statement.setString(4, patron.getTelNumber());
+            statement.setString(5, patron.getPassword());
             statement.executeUpdate();
             System.out.println("Patron added to database successfully.");
         } catch (SQLException e) {

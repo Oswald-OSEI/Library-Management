@@ -14,6 +14,9 @@ public class Patron extends Person {
         public Patron(String name, String email, String telNumber, String password) {
             super(name, email, telNumber, password);
         }
+        public Patron(int id, String name, String email, String telNumber, String password) {
+            super(id, name, email, telNumber, password);
+        }
         //method to save patron to database
         public void addPatron(Patron patron){
             patron.saveToDatabase();

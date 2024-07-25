@@ -42,14 +42,15 @@
                 </SplitPane>
             </items>
         </SplitPane>
-        <TextField fx:id="PName" layoutX="19.0" layoutY="26.0" promptText="Patron Name" />
-        <TextField fx:id="PID" layoutX="19.0" layoutY="73.0" promptText="Patron ID" />
-        <TextField fx:id="Ppassword" layoutX="19.0" layoutY="214.0" promptText="Patron Password" />
-        <Button fx:id="ApproveB" layoutX="19.0" layoutY="501.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="179.0" text="Proceed to Approve Borrowing" onAction="#switchToApproval" />
-        <Button fx:id="ApproveR" layoutX="19.0" layoutY="562.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="179.0" text="Proceed to Receive Book" onAction="#switchToApproval"/>
-        <Button fx:id="Pcheck" layoutX="19.0" layoutY="441.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="179.0" text="Check Patron History" onAction="#getPatron"/>
-        <TextField fx:id="PEmail" layoutX="19.0" layoutY="117.0" promptText="Patron Email" />
-        <Button fx:id="PAdd" layoutX="19.0" layoutY="375.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="179.0" text="Add Patron" onAction="#addPatron" />
-        <TextField fx:id="PNumber" layoutX="19.0" layoutY="165.0" promptText="Telephone Number" />
+         <TextField fx:id="sid" layoutX="19.0" layoutY="26.0" promptText="Patron Id" />
+<TextField fx:id="PName" layoutX="19.0" layoutY="73.0" promptText="Patron Name" />
+<TextField fx:id="PID" layoutX="19.0" layoutY="120.0" promptText="Patron ID" />
+<TextField fx:id="PEmail" layoutX="19.0" layoutY="167.0" promptText="Patron Email" />
+<TextField fx:id="PNumber" layoutX="19.0" layoutY="214.0" promptText="Telephone Number" />
+<TextField fx:id="Ppassword" layoutX="19.0" layoutY="261.0" promptText="Patron Password" />
+<Button fx:id="PAdd" layoutX="19.0" layoutY="308.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="179.0" text="Add Patron" onAction="#addPatron" />
+<Button fx:id="Pcheck" layoutX="19.0" layoutY="361.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="179.0" text="Check Patron History" onAction="#getPatron" />
+<Button fx:id="ApproveB" layoutX="19.0" layoutY="414.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="179.0" text="Proceed to Approve Borrowing" onAction="#switchToApproval" />
+<Button fx:id="ApproveR" layoutX="19.0" layoutY="467.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="179.0" text="Proceed to Receive Book" onAction="#switchToApproval" />
     </children>
 </AnchorPane>

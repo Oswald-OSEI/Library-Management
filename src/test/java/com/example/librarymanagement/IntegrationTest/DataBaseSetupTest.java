@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public abstract class DataBaseSetupTest {
-    protected static final String URL = "jdbc:mysql://localhost:3306/librarymanagementDb";
-    protected static final String USER = "root";
-    protected static final String PASSWORD = "";
+    protected static final String URL = "jdbc:mysql://localhost:3306/testlibrarymanagement";
+    protected static final String USER = "oswald";
+    protected static final String PASSWORD = "4Jesus";
 
     protected Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -23,8 +23,8 @@ public abstract class DataBaseSetupTest {
     protected void cleanupDatabase() throws SQLException {
         // Add statements to clean up your test database
         executeUpdate("DELETE FROM Transaction");
-        executeUpdate("DELETE FROM Books");
-        executeUpdate("DELETE FROM Patron");
-        executeUpdate("DELETE FROM Librarian");
+        executeUpdate("DELETE FROM books");
+        executeUpdate("DELETE FROM patrons");
+        executeUpdate("DELETE FROM librarian");
     }
 }

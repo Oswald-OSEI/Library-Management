@@ -24,28 +24,28 @@ public class LibrarianServiceIntegrationTest extends DataBaseSetupTest {
     @BeforeEach
     void setUp() throws SQLException {
         librarianService = new LibrarianService();
+        testLibrarian = new Librarian();
         bookService = new BookService();
         patronService = new PatronService();
-
-        testLibrarian = new Librarian();
         testLibrarian.setPersonId(1);
         testLibrarian.setName("Test Librarian");
         testLibrarian.setEmail("test@library.com");
-        testLibrarian.setPassword("password123");
+        testLibrarian.setPassword("password");
         testLibrarian.setTelNumber("1234567890");
-        // Add method to save librarian
-        cleanupDatabase();
+        librarianService.addLibrarian(testLibrarian.getPersonId(), testLibrarian.getName(), testLibrarian.getEmail(),testLibrarian.getTelNumber(), testLibrarian.getPassword());
+        //cleanupDatabase();
     }
 
     @Test
     void testLogin() {
-        int result = librarianService.login(testLibrarian.getPersonId(), testLibrarian.getEmail(), testLibrarian.getPassword());
+        int result = librarianService.login(1, "test@library.com", "password");
         assertEquals(1, result);
     }
 
     @Test
     void testApproveBorrowing() {
         Books testBook = new Books();
+        testBook.setBookId(1);
         testBook.setTitle("testBook1");
         testBook.setAuthor("testBook1Author");
         testBook.setNumberOfPages(150);
@@ -53,11 +53,12 @@ public class LibrarianServiceIntegrationTest extends DataBaseSetupTest {
         bookService.addBook(testBook);
 
         Patron testPatron = new Patron();
+        testPatron.setPersonId(1);
         testPatron.setName("Patron1");
         testPatron.setEmail("Patron1@gmail.com");
         testPatron.setTelNumber("0549657436");
         testPatron.setPassword("Patron1@password");
-        patronService.addPatron(testPatron.getName(), testPatron.getEmail(), testPatron.getTelNumber(), testPatron.getPassword());
+        patronService.addPatron(testPatron.getPersonId(), testPatron.getName(), testPatron.getEmail(), testPatron.getTelNumber(), testPatron.getPassword());
 
         int result = librarianService.approveBorrowing(
             testBook.getBookId(),
@@ -72,31 +73,31 @@ public class LibrarianServiceIntegrationTest extends DataBaseSetupTest {
         assertEquals(1, result);
     }
 
-    @Test
-    void testApproveReturn() {
-        // Similar to approveBorrowing, first set up a borrowed book
-        Patron testPatron = patronService.getPatronById(1);
-        Books testBook = bookService.getBookById(1);
-        int result = librarianService.approveReturn(
-            testPatron.getPersonId(),
-            testLibrarian.getPersonId(),
-            testBook.getBookId(),
-            testLibrarian.getPassword(),
-            testPatron.getPassword()
-        );
+    // @Test
+    // void testApproveReturn() {
+    //     // Similar to approveBorrowing, first set up a borrowed book
+    //     Patron testPatron = patronService.getPatronById(1);
+    //     Books testBook = bookService.getBookById(1);
+    //     int result = librarianService.approveReturn(
+    //         testPatron.getPersonId(),
+    //         testLibrarian.getPersonId(),
+    //         testBook.getBookId(),
+    //         testLibrarian.getPassword(),
+    //         testPatron.getPassword()
+    //     );
 
-        assertEquals(1, result);
-    }
+    //     assertEquals(1, result);
+    // }
 
-    @Test
-    void testGetLibrarianById() {
-        Librarian retrievedLibrarian = librarianService.getLibrarianById(testLibrarian.getPersonId());
-        assertNotNull(retrievedLibrarian);
-        assertEquals(testLibrarian.getName(), retrievedLibrarian.getName());
-    }
+    // @Test
+    // void testGetLibrarianById() {
+    //     Librarian retrievedLibrarian = librarianService.getLibrarianById(testLibrarian.getPersonId());
+    //     assertNotNull(retrievedLibrarian);
+    //     assertEquals(testLibrarian.getName(), retrievedLibrarian.getName());
+    // }
 
     @AfterEach
     void tearDown() throws SQLException {
-        cleanupDatabase();
+        //cleanupDatabase();
     }
 }

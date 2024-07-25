@@ -17,6 +17,7 @@ public class Books{
     this.author = author;
     this.available = quantitiesInStock>0;
    }
+
     public int getBookId() {
         return bookId;
     }

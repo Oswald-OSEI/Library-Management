@@ -29,6 +29,17 @@ public class Transaction {
         this.isReturned = isReturned;
     }
 
+    public Transaction(int id, Patron patron, Books book, Librarian approvedBy, Librarian receivedBy, Date dateBorrowed, Date dateReturned, boolean isReturned) {
+        this.transactionId = id;
+        this.patron = patron;
+        this.book = book;
+        this.approvedBy = approvedBy;
+        this.receivedBy = receivedBy;
+        this.dateBorrowed = dateBorrowed;
+        this.dateReturned = dateReturned;
+        this.isReturned = isReturned;
+    }
+
     public void setTransactionId(int Id) {
         this.transactionId = Id;
     }
