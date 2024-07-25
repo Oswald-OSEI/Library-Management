@@ -1,14 +1,18 @@
 package com.example.librarymanagement.service;
 
-import java.sql.*;
-
-import com.example.librarymanagement.mainClasses.Mains;
-import com.example.librarymanagement.models.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.librarymanagement.mainClasses.Mains;
+import com.example.librarymanagement.models.Books;
+import com.example.librarymanagement.models.Librarian;
+import com.example.librarymanagement.models.Patron;
 import com.example.librarymanagement.models.Transaction;
-import javafx.application.Platform;
-import javafx.scene.control.Alert.AlertType;
 
 public class PatronService {
     private Connection getConnection() {

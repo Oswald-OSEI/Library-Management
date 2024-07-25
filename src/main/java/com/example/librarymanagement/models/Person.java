@@ -16,6 +16,13 @@ public abstract class Person {
         this.password = password;
     }
 
+    public Person(int id,  String name, String email, String telNumber, String password) {
+        this.personId = id;
+        this.name = name;
+        this.email = email;
+        this.telNumber = telNumber;
+        this.password = password;
+    }
     // Getters and Setters for the attributes
     public int getPersonId() {
         return personId;

@@ -12,6 +12,9 @@ public class Librarian extends Person {
     public Librarian(String name, String email, String telNumber, String password) {
         super(name, email, telNumber, password);
     }
+    public Librarian(int id, String name, String email, String telNumber, String password) {
+        super(id, name, email, telNumber, password);
+    }
     // Method to get a connection to the database
     private Connection getConnection(){
         Connection connection;
