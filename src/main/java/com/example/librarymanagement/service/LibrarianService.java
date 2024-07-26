@@ -51,6 +51,7 @@ public class LibrarianService {
     }
 
     public int approveBorrowing(int bID, int pID, int LId, String title, String patronName, String patronPassword, String librariansPassword){
+
         int output = 0;
           try {
             //verify Book credentials
@@ -59,8 +60,10 @@ public class LibrarianService {
                 ps.setInt(1, bID);
                 ps.setString(2, title);
                 try (ResultSet rs = ps.executeQuery()) {
+
                     if (rs.next()) {
                         // Verify patron credentials
+
                         String verifyPatronQuery = "SELECT * FROM patrons WHERE patron_id = ? AND name = ? AND password = ?";
                         try (PreparedStatement preparedStatement = conn.prepareStatement(verifyPatronQuery)) {
                             preparedStatement.setInt(1, LId);
@@ -69,6 +72,7 @@ public class LibrarianService {
 
                             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                                 if (resultSet.next()) {
+
                                     //verify librarian's credentials
                                     String verifylibrarian = "SELECT * FROM librarian WHERE librarian_id = ? AND password = ?";
                                     try (PreparedStatement prepStatement = conn.prepareStatement(verifylibrarian)) {
@@ -77,17 +81,21 @@ public class LibrarianService {
 
                                         try (ResultSet reSet = prepStatement.executeQuery()) {
                                             if (reSet.next()) {
-                                                // Create transaction
-                                                String createTransactionQuery = "INSERT INTO Transaction (transaction_id ,patron_id, book_id, date_borrowed, approved_by) VALUES (?, ?, ?, NOW(), ?)";
-                                                try (PreparedStatement transactionStatement = conn.prepareStatement(createTransactionQuery)) {
-                                                    transactionStatement.setInt(1, pID);
-                                                    transactionStatement.setInt(2, bID);
-                                                    transactionStatement.setInt(3, LId); //id of the logged in librarian
 
+                                                // Create transaction
+                                                String createTransactionQuery = "INSERT INTO transaction (transaction_id ,patron_id, book_id, date_borrowed, approved_by) VALUES (?, ?, ?, NOW(), ?)";
+
+                                                try (PreparedStatement transactionStatement = conn.prepareStatement(createTransactionQuery)) {
+                                                    transactionStatement.setInt(1, 1);
+                                                    transactionStatement.setInt(2, pID);
+                                                    transactionStatement.setInt(3, bID);
+                                                    transactionStatement.setInt(4, LId); //id of the logged in librarian
                                                     transactionStatement.executeUpdate();
                                                     bookService.updateBookStock(bID, -1); // Decrease the stock by 1
                                                     output= 1;
+                                                    System.out.println(output);
                                                 }
+
                                             } else {
                                                output = 2;
                                             }
@@ -139,9 +147,11 @@ public class LibrarianService {
                                                 transactionStatement.setInt(3, pID);
 
                                                 int rowsUpdated = transactionStatement.executeUpdate();
+                                                output = 1;
+
                                                 if (rowsUpdated > 0) {
                                                     bookService.updateBookStock(bID, 1); // Increase the stock by 1
-                                                   output = 1;
+
                                                 } 
                                             }
                                         } 

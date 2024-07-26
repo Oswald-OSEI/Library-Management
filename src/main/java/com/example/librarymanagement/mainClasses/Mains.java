@@ -4,9 +4,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 public class Mains {
     // JDBC URL, username, and password of MySQL server
-    public static final String URL = "jdbc:mysql://localhost:3306/testlibrarymanagement";
-    public static final String USER = "oswald";
-    public static final String PASSWORD = "4Jesus";
+    public static final String URL = "jdbc:mysql://localhost:3306/librarymanagementdb";
+    public static final String USER = "root";
+    public static final String PASSWORD = "";
 
     // JDBC variables for opening and managing connection
     private static Connection connection;
